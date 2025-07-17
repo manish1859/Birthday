@@ -28,17 +28,11 @@
         </div>
         <div id="ground"></div>
     </div>
-    
-    <div id="music-container"></div>
-    <!-- <div id="canva">
-        <canvas id="canvas"></canvas>
-    </div> -->
 
-    <!-- Audio tự động phát -->
-    <!-- <audio id="myAudio" autoplay playsinline>
-        <source src="music/setlove.mp3" type="audio/mpeg">
-        <source src="music/setlove.ogg" type="audio/ogg">
-    </audio> -->
+    <div id="music-container"></div>
+
+    <!-- Audio tag -->
+    <audio id="myAudio" src="../love/music/setlove.mp3" autoplay playsinline></audio>
 
     <script src="main.js"></script>
 
@@ -46,11 +40,15 @@
         window.onload = function() {
             var audio = document.getElementById("myAudio");
             audio.muted = false;
-            audio.play().catch(function(e) {
-                console.log('Audio playback failed:', e);
-            });
 
-            // Hiệu ứng pháo hoa và trái tim
+            // ✅ Allow audio to play after first user interaction
+            document.body.addEventListener("click", function () {
+                audio.play().catch(function(e) {
+                    console.log("Audio play failed:", e);
+                });
+            }, { once: true });
+
+            // Firework + Heart Animation Code
             const canvas = document.getElementById("canvas");
             const ctx = canvas.getContext("2d");
             canvas.width = window.innerWidth;
@@ -138,8 +136,13 @@
 
                 requestAnimationFrame(animate);
             }
+
             animate();
         };
     </script>
+
+    <!-- ✅ Canvas required for animation -->
+    <canvas id="canvas" style="position:fixed; top:0; left:0; pointer-events:none; z-index:9999;"></canvas>
+
 </body>
 </html>
